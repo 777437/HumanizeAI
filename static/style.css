@@ -1,0 +1,635 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f8fc;
+    color: #171717;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    height: 72px;
+    background: #ffffff;
+    border-bottom: 1px solid #e8e8ee;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 7%;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: #635bff;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 32px;
+}
+
+.navbar nav a {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.navbar nav a:hover {
+    color: #635bff;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+    max-width: 1250px;
+    margin: auto;
+    padding: 65px 25px 80px;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.badge {
+    display: inline-block;
+
+    padding: 7px 14px;
+
+    background: #eeeeff;
+    color: #635bff;
+
+    border-radius: 30px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: 52px;
+    line-height: 1.1;
+    letter-spacing: -2px;
+
+    margin-bottom: 18px;
+}
+
+.hero h1 span {
+    color: #635bff;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+
+    color: #6b6b75;
+
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   WORKSPACE
+========================= */
+
+.workspace {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 180px minmax(0, 1fr);
+
+    gap: 20px;
+
+    align-items: center;
+}
+
+
+/* =========================
+   TEXT CARDS
+========================= */
+
+.text-card {
+    background: #ffffff;
+
+    border: 1px solid #e2e2e8;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.04);
+}
+
+.card-header {
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 18px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.card-header h2 {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.card-header p {
+    font-size: 12px;
+    color: #999;
+}
+
+.small-btn {
+    border: none;
+    background: #f5f5f7;
+
+    padding: 8px 12px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    color: #555;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.small-btn:hover {
+    background: #eaeaf0;
+}
+
+
+/* =========================
+   TEXTAREA
+========================= */
+
+textarea {
+    display: block;
+
+    width: 100%;
+    height: 350px;
+
+    padding: 20px;
+
+    border: none;
+    outline: none;
+
+    resize: vertical;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    color: #222;
+
+    background: #ffffff;
+}
+
+textarea::placeholder {
+    color: #aaa;
+}
+
+
+/* =========================
+   CARD FOOTER
+========================= */
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 18px;
+
+    border-top: 1px solid #eeeeee;
+
+    color: #999;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   CONTROLS
+========================= */
+
+.controls {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.controls label {
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #555;
+}
+
+.controls select {
+    width: 100%;
+
+    padding: 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #dddddf;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.humanize-btn {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #635bff;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.humanize-btn:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 15px rgba(99, 91, 255, 0.25);
+}
+
+.humanize-btn:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================
+   CHECK BUTTON
+========================= */
+
+.check-btn {
+    width: 100%;
+
+    padding: 13px;
+
+    border: 1px solid #dcdce4;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #555;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.check-btn:hover {
+    border-color: #635bff;
+
+    color: #635bff;
+}
+
+
+/* =========================
+   ANALYSIS SECTION
+========================= */
+
+.analysis {
+    margin-top: 45px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e2e8;
+
+    border-radius: 16px;
+
+    padding: 25px;
+}
+
+.analysis h2 {
+    font-size: 18px;
+
+    margin-bottom: 20px;
+}
+
+.analysis-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.analysis-card {
+    padding: 20px;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 12px;
+
+    background: #fafafe;
+}
+
+.analysis-card h3 {
+    font-size: 13px;
+
+    color: #777;
+
+    margin-bottom: 12px;
+}
+
+.analysis-card strong {
+    font-size: 28px;
+
+    color: #635bff;
+}
+
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden {
+    display: none;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 950px) {
+
+    .workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .controls {
+        max-width: 350px;
+
+        width: 100%;
+
+        margin: 0 auto;
+
+        order: 2;
+    }
+
+    .text-card:first-child {
+        order: 1;
+    }
+
+    .text-card:last-child {
+        order: 3;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .navbar nav {
+        display: none;
+    }
+
+    main {
+        padding: 45px 15px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+}/* =========================
+   AI CHECK RESULT
+========================= */
+
+.analysis {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto 80px;
+    padding: 30px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+}
+
+.analysis.hidden {
+    display: none;
+}
+
+.analysis-header {
+    margin-bottom: 25px;
+}
+
+.analysis-header h2 {
+    margin: 0 0 8px;
+    font-size: 26px;
+}
+
+.analysis-header p {
+    margin: 0;
+    color: #666;
+    line-height: 1.6;
+    max-width: 800px;
+}
+
+
+/* =========================
+   ANALYSIS GRID
+========================= */
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+
+/* =========================
+   ANALYSIS CARDS
+========================= */
+
+.analysis-card {
+    padding: 25px;
+    border-radius: 15px;
+    background: #f8f8f8;
+    border: 1px solid #e6e6e6;
+    text-align: center;
+}
+
+.analysis-card h3 {
+    margin: 0 0 15px;
+    font-size: 16px;
+}
+
+.analysis-card strong {
+    display: block;
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.analysis-card span {
+    display: block;
+    color: #777;
+    font-size: 14px;
+}
+
+
+/* =========================
+   ANALYSIS TEXT
+========================= */
+
+.analysis-wide {
+    grid-column: 1 / -1;
+    text-align: left;
+}
+
+.analysis-wide h3 {
+    margin-bottom: 10px;
+}
+
+.analysis-wide p {
+    margin: 0;
+    color: #555;
+    line-height: 1.7;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .analysis {
+        width: 94%;
+        padding: 20px;
+    }
+
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analysis-wide {
+        grid-column: auto;
+    }
+
+}/* =========================
+   FOOTER
+========================= */
+
+.site-footer {
+    text-align: center;
+    padding: 35px 20px;
+    margin-top: 60px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.site-footer p {
+    margin: 5px 0;
+}
+
+.site-footer a {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.footer-subtitle {
+    font-size: 13px;
+    color: #777;
+}/* =========================
+   BRANDING
+========================= */
+
+.logo {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.logo span {
+    font-weight: 700;
+}
+
+.logo small {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.55;
+    letter-spacing: 0.2px;
+}
