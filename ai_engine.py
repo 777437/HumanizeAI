@@ -5,27 +5,21 @@ DEFAULT_MODEL = "qwen2.5:3b"
 
 
 def get_installed_models():
-    """
-    Return a list of Ollama models installed on this computer.
-    """
+    """Return Ollama models installed on this computer."""
 
     try:
-
         response = ollama.list()
 
         models = []
 
         for model in response.models:
-
             if model.model:
                 models.append(model.model)
 
         return models
 
     except Exception as error:
-
         print("OLLAMA MODEL ERROR:", error)
-
         return []
 
 
@@ -35,58 +29,109 @@ def humanize_text(text, tone="Natural", model=None):
         model = DEFAULT_MODEL
 
     prompt = f"""
-You are an expert human writing assistant.
+You are a rewriting engine.
 
-Rewrite the following text so it sounds naturally written by
-a real person while preserving the original meaning and facts.
+Your ONLY job is to rewrite the user's text.
+
+DO NOT return the original text unchanged.
+
+You MUST change the wording and sentence structure while keeping
+the exact meaning and important information.
 
 Writing style: {tone}
 
-IMPORTANT WRITING RULES:
+STRICT RULES:
 
-1. Preserve the original meaning and important information.
-2. Do not invent facts, examples, statistics, or sources.
-3. Use natural vocabulary instead of unnecessarily complicated words.
-4. Vary sentence length and sentence structure naturally.
-5. Avoid repetitive sentence patterns.
-6. Avoid excessive formal or academic filler.
-7. Avoid unnecessary transition words such as:
-   "Furthermore", "Moreover", "Additionally", "Consequently",
-   and "Therefore" unless they genuinely fit the context.
-8. Do not overuse semicolons.
-9. Avoid unnecessary em dashes.
-10. Avoid unnecessary en dashes.
-11. Avoid double hyphens used as a substitute for an em dash.
-12. Prefer commas, periods, or separate sentences when appropriate.
-13. Do not make every sentence sound perfectly structured.
-14. Keep the writing clear, natural, and easy to read.
-15. Preserve technical terms when necessary.
-16. Do not add an introduction or explanation.
-17. Return ONLY the rewritten text.
+- Rewrite EVERY sentence.
+- Change sentence structure.
+- Replace some words with natural alternatives.
+- Make the writing sound like a real person wrote it.
+- Keep the same meaning.
+- Keep important facts, names, numbers, and technical terms.
+- Do not add new information.
+- Do not remove important information.
+- Do not explain what you changed.
+- Do not mention AI.
+- Do not say "Here is the rewritten text".
+- Do not use quotation marks around the answer.
+- Return ONLY the rewritten version.
 
-Example:
+IMPORTANT:
+
+Even if the original sentence already sounds natural,
+you MUST rewrite it using different wording.
+
+For example:
 
 Original:
-Artificial intelligence is becoming a crucial part of modern
-technology—it helps people complete tasks more efficiently.
+"Artificial intelligence is becoming an important part of modern technology."
 
-Better:
-Artificial intelligence is becoming a crucial part of modern
-technology. It helps people complete tasks more efficiently.
+Rewrite:
+"AI is becoming a major part of today's technology."
 
-Now rewrite this text:
+Another example:
+
+Original:
+"Students can use this system to improve their writing."
+
+Rewrite:
+"This system allows students to make their writing better."
+
+Another example:
+
+Original:
+"The system collects sensor data and sends it to the cloud."
+
+Rewrite:
+"Sensor readings are collected by the system and then sent to the cloud."
+
+Now rewrite the following text:
 
 {text}
 """
 
-    response = ollama.chat(
-        model=model,
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
-    )
+    try:
 
-    return response["message"]["content"].strip()
+        response = ollama.chat(
+            model=model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a text rewriting assistant. "
+                        "Always rewrite the input. "
+                        "Never return the input unchanged."
+                    )
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            options={
+                "temperature": 0.8,
+                "top_p": 0.9
+            }
+        )
+
+        result = response["message"]["content"].strip()
+
+        # Remove accidental prefixes
+        prefixes = [
+            "Here is the rewritten text:",
+            "Here is the rewritten version:",
+            "Rewritten text:",
+            "Rewritten version:"
+        ]
+
+        for prefix in prefixes:
+            if result.lower().startswith(prefix.lower()):
+                result = result[len(prefix):].strip()
+
+        return result
+
+    except Exception as error:
+
+        print("OLLAMA HUMANIZATION ERROR:", error)
+
+        raise
