@@ -6,11 +6,16 @@ const clearBtn = document.getElementById("clearBtn");
 const copyBtn = document.getElementById("copyBtn");
 const checkBtn = document.getElementById("checkBtn");
 
+const model = document.getElementById("model");
 const tone = document.getElementById("tone");
+
+const modelRecommendation =
+    document.getElementById("modelRecommendation");
 
 const wordCount = document.getElementById("wordCount");
 const charCount = document.getElementById("charCount");
-const outputWordCount = document.getElementById("outputWordCount");
+const outputWordCount =
+    document.getElementById("outputWordCount");
 const status = document.getElementById("status");
 
 const MAX_WORDS = 1000;
@@ -86,10 +91,207 @@ function updateInputStats() {
 
 function updateOutputStats() {
 
-    const words = countWords(outputText.value);
+    const words =
+        countWords(outputText.value);
 
     outputWordCount.textContent =
         `${words} words`;
+}
+
+
+/* =========================
+   MODEL RECOMMENDATION
+========================= */
+
+function updateModelRecommendation() {
+
+    if (!modelRecommendation || !model) {
+        return;
+    }
+
+    const selectedModel =
+        model.value.toLowerCase();
+
+
+    if (!selectedModel) {
+
+        modelRecommendation.textContent =
+            "Choose an installed Ollama model.";
+
+        return;
+    }
+
+
+    if (
+        selectedModel.includes("3b") ||
+        selectedModel.includes("1.5b") ||
+        selectedModel.includes("2b")
+    ) {
+
+        modelRecommendation.textContent =
+            "Recommended for systems with around 4–8 GB RAM. " +
+            "Uses less memory and is faster on lower-end laptops.";
+
+        return;
+    }
+
+
+    if (
+        selectedModel.includes("7b") ||
+        selectedModel.includes("8b")
+    ) {
+
+        modelRecommendation.textContent =
+            "Recommended for systems with 16 GB RAM or more. " +
+            "Usually provides better writing quality but needs more memory.";
+
+        return;
+    }
+
+
+    if (
+        selectedModel.includes("14b") ||
+        selectedModel.includes("13b")
+    ) {
+
+        modelRecommendation.textContent =
+            "Recommended for systems with 24 GB RAM or more. " +
+            "Higher quality, but significantly more demanding.";
+
+        return;
+    }
+
+
+    if (
+        selectedModel.includes("32b") ||
+        selectedModel.includes("30b")
+    ) {
+
+        modelRecommendation.textContent =
+            "Recommended for high-memory systems. " +
+            "This model may require substantial RAM.";
+
+        return;
+    }
+
+
+    modelRecommendation.textContent =
+        "Model detected. Check its requirements before using it.";
+}
+
+
+/* =========================
+   LOAD OLLAMA MODELS
+========================= */
+
+async function loadModels() {
+
+    if (!model) {
+        return;
+    }
+
+    model.innerHTML = `
+        <option value="">
+            Loading models...
+        </option>
+    `;
+
+    try {
+
+        const response =
+            await fetch("/models");
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Could not load Ollama models."
+            );
+        }
+
+
+        model.innerHTML = "";
+
+
+        if (
+            !data.models ||
+            data.models.length === 0
+        ) {
+
+            model.innerHTML = `
+                <option value="">
+                    No Ollama models found
+                </option>
+            `;
+
+            updateModelRecommendation();
+
+            return;
+        }
+
+
+        data.models.forEach(
+            function (modelName) {
+
+                const option =
+                    document.createElement("option");
+
+                option.value =
+                    modelName;
+
+                option.textContent =
+                    modelName;
+
+                model.appendChild(option);
+            }
+        );
+
+
+        updateModelRecommendation();
+
+        status.textContent =
+            "Ready";
+
+
+    } catch (error) {
+
+        console.error(
+            "Model loading error:",
+            error
+        );
+
+        model.innerHTML = `
+            <option value="">
+                Could not load models
+            </option>
+        `;
+
+        if (modelRecommendation) {
+
+            modelRecommendation.textContent =
+                "Make sure Ollama is installed and running.";
+        }
+
+        status.textContent =
+            "Ollama unavailable";
+    }
+}
+
+
+/* =========================
+   MODEL CHANGE
+========================= */
+
+if (model) {
+
+    model.addEventListener(
+        "change",
+        updateModelRecommendation
+    );
 }
 
 
@@ -139,10 +341,28 @@ humanizeBtn.addEventListener(
         }
 
 
+        if (model && !model.value) {
+
+            alert(
+                "Please select an AI model."
+            );
+
+            return;
+        }
+
+
         humanizeBtn.disabled = true;
 
         if (checkBtn) {
             checkBtn.disabled = true;
+        }
+
+        if (model) {
+            model.disabled = true;
+        }
+
+        if (tone) {
+            tone.disabled = true;
         }
 
         humanizeBtn.textContent =
@@ -166,8 +386,16 @@ humanizeBtn.addEventListener(
                         },
 
                         body: JSON.stringify({
+
                             text: text,
-                            tone: tone.value
+
+                            tone:
+                                tone.value,
+
+                            model:
+                                model
+                                    ? model.value
+                                    : ""
                         })
                     }
                 );
@@ -177,7 +405,10 @@ humanizeBtn.addEventListener(
                 await response.json();
 
 
-            if (!response.ok || !data.success) {
+            if (
+                !response.ok ||
+                !data.success
+            ) {
 
                 throw new Error(
                     data.message ||
@@ -190,6 +421,7 @@ humanizeBtn.addEventListener(
                 data.result.trim();
 
             updateOutputStats();
+
 
             status.textContent =
                 "Completed";
@@ -212,8 +444,18 @@ humanizeBtn.addEventListener(
 
         } finally {
 
+            humanizeBtn.disabled = false;
+
             humanizeBtn.textContent =
                 "Humanize Text";
+
+            if (model) {
+                model.disabled = false;
+            }
+
+            if (tone) {
+                tone.disabled = false;
+            }
 
             updateInputStats();
         }
@@ -264,6 +506,14 @@ if (checkBtn) {
 
             humanizeBtn.disabled = true;
 
+            if (model) {
+                model.disabled = true;
+            }
+
+            if (tone) {
+                tone.disabled = true;
+            }
+
             checkBtn.textContent =
                 "Checking...";
 
@@ -295,7 +545,10 @@ if (checkBtn) {
                     await response.json();
 
 
-                if (!response.ok || !data.success) {
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
 
                     throw new Error(
                         data.message ||
@@ -303,10 +556,6 @@ if (checkBtn) {
                     );
                 }
 
-
-                /* =========================
-                   UPDATE AI CHECK UI
-                ========================= */
 
                 const analysisSection =
                     document.getElementById(
@@ -350,10 +599,6 @@ if (checkBtn) {
                 }
 
 
-                /* =========================
-                   SHOW ANALYSIS
-                ========================= */
-
                 if (analysisSection) {
 
                     analysisSection.classList.remove(
@@ -393,6 +638,14 @@ if (checkBtn) {
                 checkBtn.textContent =
                     "Check AI";
 
+                if (model) {
+                    model.disabled = false;
+                }
+
+                if (tone) {
+                    tone.disabled = false;
+                }
+
                 updateInputStats();
             }
 
@@ -421,8 +674,6 @@ clearBtn.addEventListener(
         status.textContent =
             "Ready";
 
-
-        /* Hide old AI result */
 
         const analysisSection =
             document.getElementById(
@@ -506,3 +757,5 @@ copyBtn.addEventListener(
 updateInputStats();
 
 updateOutputStats();
+
+loadModels();

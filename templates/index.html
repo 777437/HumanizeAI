@@ -17,29 +17,46 @@
 
 <body>
 
-    <!-- NAVBAR -->
+    <!-- =========================
+         NAVBAR
+    ========================== -->
 
     <header class="navbar">
 
-       <div class="logo">
-    Humanize<span>AI</span>
-    <small>by Ramzan Ali</small>
-</div>
+        <div class="logo">
+            Humanize<span>AI</span>
+            <small>by Ramzan Ali</small>
+        </div>
 
         <nav>
-            <a href="#">Humanizer</a>
-            <a href="#analysisSection">AI Check</a>
-            <a href="#">About</a>
+
+            <a href="#">
+                Humanizer
+            </a>
+
+            <a href="#analysisSection">
+                AI Check
+            </a>
+
+            <a href="#">
+                About
+            </a>
+
         </nav>
 
     </header>
 
 
-    <!-- MAIN -->
+    <!-- =========================
+         MAIN
+    ========================== -->
 
     <main>
 
-        <!-- HERO -->
+
+        <!-- =========================
+             HERO
+        ========================== -->
 
         <section class="hero">
 
@@ -60,11 +77,16 @@
         </section>
 
 
-        <!-- WORKSPACE -->
+        <!-- =========================
+             WORKSPACE
+        ========================== -->
 
         <section class="workspace">
 
-            <!-- INPUT -->
+
+            <!-- =========================
+                 INPUT
+            ========================== -->
 
             <div class="text-card">
 
@@ -72,7 +94,9 @@
 
                     <div>
 
-                        <h2>Original Text</h2>
+                        <h2>
+                            Original Text
+                        </h2>
 
                         <p>
                             Paste your text below
@@ -111,43 +135,86 @@
             </div>
 
 
-            <!-- CONTROLS -->
+            <!-- =========================
+                 CONTROLS
+            ========================== -->
 
             <div class="controls">
 
-                <label for="tone">
-                    Writing Style
-                </label>
+
+                <!-- =========================
+                     AI MODEL
+                ========================== -->
+
+                <div class="control-group">
+
+                    <label for="model">
+                        AI Model
+                    </label>
+
+                    <select id="model">
+
+                        <option value="">
+                            Loading models...
+                        </option>
+
+                    </select>
+
+                    <p
+                        id="modelRecommendation"
+                        class="model-recommendation">
+
+                        Choose an installed Ollama model.
+
+                    </p>
+
+                </div>
 
 
-                <select id="tone">
+                <!-- =========================
+                     WRITING STYLE
+                ========================== -->
 
-                    <option value="Natural">
-                        Natural
-                    </option>
+                <div class="control-group">
 
-                    <option value="Student">
-                        Student
-                    </option>
+                    <label for="tone">
+                        Writing Style
+                    </label>
 
-                    <option value="Professional">
-                        Professional
-                    </option>
+                    <select id="tone">
 
-                    <option value="Casual">
-                        Casual
-                    </option>
+                        <option value="Natural">
+                            Natural
+                        </option>
 
-                    <option value="Academic">
-                        Academic
-                    </option>
+                        <option value="Student">
+                            Student
+                        </option>
 
-                    <option value="Simple">
-                        Simple
-                    </option>
+                        <option value="Professional">
+                            Professional
+                        </option>
 
-                </select>
+                        <option value="Casual">
+                            Casual
+                        </option>
 
+                        <option value="Academic">
+                            Academic
+                        </option>
+
+                        <option value="Simple">
+                            Simple
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =========================
+                     HUMANIZE BUTTON
+                ========================== -->
 
                 <button
                     id="humanizeBtn"
@@ -157,6 +224,10 @@
 
                 </button>
 
+
+                <!-- =========================
+                     AI CHECK BUTTON
+                ========================== -->
 
                 <button
                     id="checkBtn"
@@ -169,7 +240,9 @@
             </div>
 
 
-            <!-- OUTPUT -->
+            <!-- =========================
+                 OUTPUT
+            ========================== -->
 
             <div class="text-card">
 
@@ -177,7 +250,9 @@
 
                     <div>
 
-                        <h2>Humanized Text</h2>
+                        <h2>
+                            Humanized Text
+                        </h2>
 
                         <p>
                             Your result will appear here
@@ -219,11 +294,14 @@
         </section>
 
 
-        <!-- AI CHECK RESULT -->
+        <!-- =========================
+             AI CHECK RESULT
+        ========================== -->
 
         <section
             id="analysisSection"
             class="analysis hidden">
+
 
             <div class="analysis-header">
 
@@ -232,9 +310,9 @@
                 </h2>
 
                 <p>
-                    This result is an AI-likeness estimate based
-                    on writing patterns. It is not a definitive
-                    determination of authorship.
+                    This result is an AI-likeness estimate
+                    based on writing patterns. It is not a
+                    definitive determination of authorship.
                 </p>
 
             </div>
@@ -242,7 +320,10 @@
 
             <div class="analysis-grid">
 
-                <!-- AI SCORE -->
+
+                <!-- =========================
+                     AI SCORE
+                ========================== -->
 
                 <div class="analysis-card">
 
@@ -261,7 +342,9 @@
                 </div>
 
 
-                <!-- HUMAN SCORE -->
+                <!-- =========================
+                     HUMAN SCORE
+                ========================== -->
 
                 <div class="analysis-card">
 
@@ -280,7 +363,9 @@
                 </div>
 
 
-                <!-- ANALYSIS -->
+                <!-- =========================
+                     ANALYSIS
+                ========================== -->
 
                 <div class="analysis-card analysis-wide">
 
@@ -302,30 +387,44 @@
     </main>
 
 
-    <!-- JAVASCRIPT -->
+    <!-- =========================
+         FOOTER / CREATOR CREDIT
+    ========================== -->
+
+    <footer class="site-footer">
+
+        <p>
+
+            HumanizeAI by
+
+            <a
+                href="https://www.linkedin.com/in/ramzanali-27544a284/"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                Ramzan Ali
+
+            </a>
+
+        </p>
+
+
+        <p class="footer-subtitle">
+
+            Open-source AI humanizer powered by
+            Ollama &amp; Qwen
+
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-<!-- =========================
-     FOOTER / CREATOR CREDIT
-========================= -->
 
-<footer class="site-footer">
-
-    <p>
-        HumanizeAI by
-        <a
-            href="https://www.linkedin.com/in/ramzanali-27544a284/"
-            target="_blank"
-            rel="noopener noreferrer">
-            Ramzan Ali
-        </a>
-    </p>
-
-    <p class="footer-subtitle">
-        Open-source AI humanizer powered by Ollama & Qwen
-    </p>
-
-</footer>
 </body>
 
 </html>
